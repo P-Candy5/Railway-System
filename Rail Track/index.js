@@ -1,32 +1,33 @@
 let get = (item) => document.querySelectorAll(item);
-let take =(item) => document.querySelector(item);
+let take = (item) => document.querySelector(item);
 
 let inputHolder = get("input");
 let buttonHolder = take("button");
 let error = get(".display-error");
-let messageHolder = get(".message")
+let messageHolder = take(".message");
 
+console.log(" do na");
 
-console.log(" do na")
-
-function same() {
-    console.log("print out")
-    if (inputHolder[2].value === inputHolder[3].value) {
-error.classList.add("hide")
-    }
-    else{
-messageHolder.innerText ="incorrect Password"
-            
-        }
+async function same(data) {
+  console.log("print out");
+  if (data.password === data.confirmPassword) {
+    error.classList.add("hide");
+    const resp = await fetch("/url", {
+      method: "POST",
+      body: data,
+    });
+  } else {
+    messageHolder.innerText = "incorrect Password";
+  }
 }
 
-buttonHolder.addEventListener("click", () =>{
-    console.log(inputHolder[0].value);
-    console.log(inputHolder[1].value);
-    console.log(inputHolder[2].value);
-    console.log(inputHolder[3].value);
-    same();
-    
-
+buttonHolder.addEventListener("click", (e) => {
+  e.preventDefault();
+  let fullName = inputHolder[0].value;
+  let email = inputHolder[1].value;
+  let password = inputHolder[2].value;
+  let confirmPassword = inputHolder[3].value;
+  const data = { fullName, email, password, confirmPassword };
+  console.log(data);
+  same(data);
 });
-
