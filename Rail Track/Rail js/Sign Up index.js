@@ -11,11 +11,17 @@ console.log(" do na");
 async function same(data) {
   console.log("print out");
   if (data.password === data.confirmPassword) {
-    error.classList.add("hide");
-    const resp = await fetch("/url", {
+    // error.classList.add("hide");
+    const resp = await fetch("http://localhost:5005/auth", {
       method: "POST",
-      body: data,
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
+    const myData = await resp.json();
+    modal.classList.remove();
+    // console.log(myData);
   } else {
     messageHolder.innerText = "incorrect Password!";
     inputHolder[2].value = "";
